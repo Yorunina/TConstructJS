@@ -21,6 +21,7 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.library.modifiers.Modifier;
+import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InteractionSource;
 import slimeknights.tconstruct.library.tools.context.*;
 import slimeknights.tconstruct.library.tools.nbt.*;
@@ -76,8 +77,13 @@ public class ModifierBuilder {
     public transient ArmorDamageModifyFunction modifyProtection;
     public transient ArmorDamageModifyFunction modifyDamageTaken;
     public transient ElytraFlightFunction elytraFlight;
-    public transient EquipmentChangeFunction onEquipTool;
-    public transient EquipmentChangeFunction onUnequipTool;
+    public transient ToolChangeFunction onEquipTool;
+    public transient ToolChangeFunction onUnequipTool;
+    public transient FailedMeleeHitFunction failedMeleeHit;
+    public transient EquipmentChangeFunction onEquipmentChange;
+    public transient StartHarvestFunction startHarvest;
+    public transient FinishHarvestFunction finishHarvest;
+
 
     public ModifierBuilder() {
         this.priority = 100;
@@ -300,13 +306,30 @@ public class ModifierBuilder {
         return this;
     }
 
-    public ModifierBuilder onEquip(EquipmentChangeFunction function) {
+    public ModifierBuilder onEquip(ToolChangeFunction function) {
         this.onEquipTool = function;
         return this;
     }
 
-    public ModifierBuilder onUnequip(EquipmentChangeFunction function) {
+    public ModifierBuilder onUnequip(ToolChangeFunction function) {
         this.onUnequipTool = function;
+        return this;
+    }
+
+    public ModifierBuilder failedMeleeHit(FailedMeleeHitFunction function) {
+        this.failedMeleeHit = function;
+        return this;
+    }
+    public ModifierBuilder onEquipmentChange(EquipmentChangeFunction function) {
+        this.onEquipmentChange = function;
+        return this;
+    }
+    public ModifierBuilder startHarvest(StartHarvestFunction function) {
+        this.startHarvest = function;
+        return this;
+    }
+    public ModifierBuilder finishHarvest(FinishHarvestFunction function) {
+        this.finishHarvest = function;
         return this;
     }
 
@@ -490,8 +513,29 @@ public class ModifierBuilder {
         boolean onFlightTick(IToolStackView tool, int level, LivingEntity entity, int flightTime);
     }
 
+
+    @FunctionalInterface
+    public interface FailedMeleeHitFunction {
+        void onFailedMeleeHit(IToolStackView tool, int level, ToolAttackContext source, float damageAttempted);
+    }
+
+    @FunctionalInterface
+    public interface ToolChangeFunction {
+        void onToolChange(IToolStackView tool, int level, EquipmentChangeContext context);
+    }
+
     @FunctionalInterface
     public interface EquipmentChangeFunction {
-        void onToolChange(IToolStackView tool, int level, EquipmentChangeContext context);
+        void onEquipmentChange(IToolStackView tool, int level, EquipmentChangeContext context, EquipmentSlot slotType);
+    }
+
+    @FunctionalInterface
+    public interface StartHarvestFunction {
+        void onStartHarvest(IToolStackView tool, int level, ToolHarvestContext context);
+    }
+
+    @FunctionalInterface
+    public interface FinishHarvestFunction {
+        void onFinishHarvest(IToolStackView tool, int level, ToolHarvestContext context, int harvested);
     }
 }

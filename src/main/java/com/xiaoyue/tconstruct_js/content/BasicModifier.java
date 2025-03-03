@@ -39,6 +39,7 @@ import slimeknights.tconstruct.library.modifiers.hook.interaction.GeneralInterac
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InteractionSource;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InventoryTickModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.mining.BlockBreakModifierHook;
+import slimeknights.tconstruct.library.modifiers.hook.mining.BlockHarvestModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.mining.BreakSpeedModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.ranged.BowAmmoModifierHook;
 import slimeknights.tconstruct.library.modifiers.hook.ranged.ProjectileHitModifierHook;
@@ -62,7 +63,7 @@ public class BasicModifier extends Modifier implements VolatileDataModifierHook,
         MeleeHitModifierHook, MeleeDamageModifierHook, DamageDealtModifierHook, LootingModifierHook,
         ArmorLootingModifierHook, ProjectileHitModifierHook, ProjectileLaunchModifierHook, BowAmmoModifierHook,
         TooltipModifierHook, DamageBlockModifierHook, OnAttackedModifierHook, ProtectionModifierHook,
-        ModifyDamageModifierHook, EquipmentChangeModifierHook, DurabilityDisplayModifierHook, ElytraFlightModifierHook {
+        ModifyDamageModifierHook, EquipmentChangeModifierHook, DurabilityDisplayModifierHook, ElytraFlightModifierHook, BlockHarvestModifierHook {
 
     public final ModifierBuilder builder;
 
@@ -271,6 +272,13 @@ public class BasicModifier extends Modifier implements VolatileDataModifierHook,
     }
 
     @Override
+    public void failedMeleeHit(IToolStackView tool, ModifierEntry modifier, ToolAttackContext context, float damageAttempted) {
+        if (this.builder.failedMeleeHit != null) {
+            this.builder.failedMeleeHit.onFailedMeleeHit(tool, modifier.getLevel(), context, damageAttempted);
+        }
+    }
+
+    @Override
     public void onDamageDealt(IToolStackView tool, ModifierEntry modifier, EquipmentContext context, EquipmentSlot slotType, LivingEntity target, DamageSource source, float amount, boolean isDirectDamage) {
         if (this.builder.onDamageDealt != null) {
             this.builder.onDamageDealt.onDamageDealt(tool, modifier.getLevel(), context, slotType, target, source, amount, isDirectDamage);
@@ -322,6 +330,11 @@ public class BasicModifier extends Modifier implements VolatileDataModifierHook,
             return this.builder.findBowAmmo.findAmmo(tool, modifier.getLevel(), shooter, standardAmmo, ammoPredicate);
         }
         return standardAmmo;
+    }
+
+    @Override
+    public void shrinkAmmo(IToolStackView tool, ModifierEntry modifier, LivingEntity shooter, ItemStack ammo, int needed) {
+        BowAmmoModifierHook.super.shrinkAmmo(tool, modifier, shooter, ammo, needed);
     }
 
     // display
@@ -409,4 +422,24 @@ public class BasicModifier extends Modifier implements VolatileDataModifierHook,
         }
     }
 
+    @Override
+    public void onEquipmentChange(IToolStackView tool, ModifierEntry modifier, EquipmentChangeContext context, EquipmentSlot slotType) {
+        if (this.builder.onEquipmentChange!= null) {
+            this.builder.onEquipmentChange.onEquipmentChange(tool, modifier.getLevel(), context, slotType);
+        }
+    }
+
+    @Override
+    public void startHarvest(IToolStackView tool, ModifierEntry modifier, ToolHarvestContext context) {
+        if (this.builder.startHarvest!= null) {
+            this.builder.startHarvest.onStartHarvest(tool, modifier.getLevel(), context);
+        }
+    }
+
+    @Override
+    public void finishHarvest(IToolStackView tool, ModifierEntry modifier, ToolHarvestContext context, int harvested) {
+        if (this.builder.finishHarvest!= null) {
+            this.builder.finishHarvest.onFinishHarvest(tool, modifier.getLevel(), context, harvested);
+        }
+    }
 }
