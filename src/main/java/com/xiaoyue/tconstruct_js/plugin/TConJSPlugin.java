@@ -27,6 +27,7 @@ public class TConJSPlugin extends KubeJSPlugin {
         event.register(TConstruct.getResource("molding_table"), RecipeBuilder.MOLDING_TABLE_RECIPE);
         event.register(TConstruct.getResource("molding_basin"), RecipeBuilder.MOLDING_BASIN_RECIPE);
         event.register(TConstruct.getResource("melting_fuel"), RecipeBuilder.MELTING_FUEL);
+        event.register(TConstruct.getResource("material"), RecipeBuilder.MATERIAL_BIND);
     }
 
     @Override

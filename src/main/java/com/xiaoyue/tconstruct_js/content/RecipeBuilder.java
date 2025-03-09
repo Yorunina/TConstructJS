@@ -5,10 +5,7 @@ import dev.latvian.mods.kubejs.fluid.OutputFluid;
 import dev.latvian.mods.kubejs.item.InputItem;
 import dev.latvian.mods.kubejs.item.OutputItem;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
-import dev.latvian.mods.kubejs.recipe.component.BooleanComponent;
-import dev.latvian.mods.kubejs.recipe.component.FluidComponents;
-import dev.latvian.mods.kubejs.recipe.component.ItemComponents;
-import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
+import dev.latvian.mods.kubejs.recipe.component.*;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 
 public interface RecipeBuilder {
@@ -16,6 +13,7 @@ public interface RecipeBuilder {
     RecipeKey<OutputItem> RESULT = ItemComponents.OUTPUT.key("result");
     RecipeKey<InputItem> PATTERN = ItemComponents.INPUT.key("pattern");
     RecipeKey<InputItem> MATERIAL = ItemComponents.INPUT.key("material");
+    RecipeKey<String> MATERIAL_ID = StringComponent.ID.key("material");
     RecipeKey<InputItem> INPUT = ItemComponents.INPUT.key("ingredient");
     RecipeKey<InputItem> BOTTLE = ItemComponents.INPUT.key("bottle");
     RecipeKey<InputItem> CONTAINER = ItemComponents.INPUT.key("container");
@@ -32,7 +30,9 @@ public interface RecipeBuilder {
     RecipeKey<OutputFluid> FLUID_RESULT = FluidComponents.OUTPUT.key("result");
     RecipeKey<InputFluid> FLUID = FluidComponents.INPUT.key("fluid");
     RecipeKey<InputFluid[]> FLUID_INPUTS = FluidComponents.INPUT_ARRAY.key("inputs");
-
+    RecipeKey<OutputItem> LEFTOVER = ItemComponents.OUTPUT.key("leftover").optional(OutputItem.EMPTY);
+    RecipeKey<Integer> MATERIAL_VALUE = NumberComponent.INT.key("value").optional(1);
+    RecipeKey<Integer> MATERIAL_NEED = NumberComponent.INT.key("needed").optional(1);
     RecipeSchema MOLDING_TABLE_RECIPE = new RecipeSchema(RESULT, PATTERN, MATERIAL);
     RecipeSchema MOLDING_BASIN_RECIPE = new RecipeSchema(RESULT, PATTERN, MATERIAL);
     RecipeSchema MELTING_RECIPE = new RecipeSchema(FLUID_RESULT, INPUT, TEMPERATURE, TIME);
@@ -46,5 +46,5 @@ public interface RecipeBuilder {
     RecipeSchema BASIN_FILLING = new RecipeSchema(FLUID_AMOUNT, CONTAINER);
     RecipeSchema ALLOY_RECIPE = new RecipeSchema(FLUID_RESULT, FLUID_INPUTS, TEMPERATURE);
     RecipeSchema MELTING_FUEL = new RecipeSchema(DURATION, FLUID, TEMPERATURE);
-
+    RecipeSchema MATERIAL_BIND = new RecipeSchema(MATERIAL_ID, INPUT, MATERIAL_VALUE, MATERIAL_NEED, LEFTOVER);
 }
