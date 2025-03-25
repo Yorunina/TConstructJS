@@ -1,6 +1,6 @@
 package com.xiaoyue.tconstruct_js.plugin;
 
-import com.xiaoyue.tconstruct_js.content.RecipeBuilder;
+import com.xiaoyue.tconstruct_js.content.recipe.*;
 import com.xiaoyue.tconstruct_js.event.TConEventGroup;
 import com.xiaoyue.tconstruct_js.utils.SimpleTCon;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
@@ -14,19 +14,20 @@ public class TConJSPlugin extends KubeJSPlugin {
 
     @Override
     public void registerRecipeSchemas(RegisterRecipeSchemasEvent event) {
-        event.register(TConstruct.getResource("casting_table"), RecipeBuilder.CASTING_TABLE_RECIPE);
-        event.register(TConstruct.getResource("casting_basin"), RecipeBuilder.CASTING_BASIN_RECIPE);
-        event.register(TConstruct.getResource("table_duplication"), RecipeBuilder.TABLE_DUPLICATION);
-        event.register(TConstruct.getResource("basin_duplication"), RecipeBuilder.BASIN_DUPLICATION);
-        event.register(TConstruct.getResource("casting_table_potion"), RecipeBuilder.CASTING_TABLE_POTION);
-        event.register(TConstruct.getResource("casting_basin_potion"), RecipeBuilder.CASTING_BASIN_POTION);
-        event.register(TConstruct.getResource("table_filling"), RecipeBuilder.TABLE_FILLING);
-        event.register(TConstruct.getResource("basin_filling"), RecipeBuilder.BASIN_FILLING);
-        event.register(TConstruct.getResource("alloy"), RecipeBuilder.ALLOY_RECIPE);
-        event.register(TConstruct.getResource("melting"), RecipeBuilder.MELTING_RECIPE);
-        event.register(TConstruct.getResource("molding_table"), RecipeBuilder.MOLDING_TABLE_RECIPE);
-        event.register(TConstruct.getResource("molding_basin"), RecipeBuilder.MOLDING_BASIN_RECIPE);
-        event.register(TConstruct.getResource("melting_fuel"), RecipeBuilder.MELTING_FUEL);
+        event.namespace(TConstruct.MOD_ID)
+                .register("casting_table", CastingRecipe.CASTING_TABLE)
+                .register("casting_basin", CastingRecipe.CASTING_BASIN)
+                .register("casting_table_potion", CastingRecipe.CASTING_TABLE_POTION)
+                .register("casting_basin_potion", CastingRecipe.CASTING_BASIN_POTION)
+                .register("table_duplication", DuplicationRecipe.TABLE_DUPLICATION)
+                .register("basin_duplication", DuplicationRecipe.BASIN_DUPLICATION)
+                .register("table_filling", FillingRecipe.TABLE_FILLING)
+                .register("basin_filling", FillingRecipe.BASIN_FILLING)
+                .register("molding_table", MoldingRecipe.MOLDING_TABLE)
+                .register("molding_basin", MoldingRecipe.MOLDING_BASIN)
+                .register("melting", MeltingRecipe.MELTING)
+                .register("melting_fuel", MeltingRecipe.MELTING_FUEL)
+                .register("alloy", MiscRecipe.ALLOY_RECIPE);
     }
 
     @Override
