@@ -27,7 +27,8 @@ public class TConJSPlugin extends KubeJSPlugin {
                 .register("molding_basin", MoldingRecipe.MOLDING_BASIN)
                 .register("melting", MeltingRecipe.MELTING)
                 .register("melting_fuel", MeltingRecipe.MELTING_FUEL)
-                .register("alloy", MiscRecipe.ALLOY_RECIPE);
+                .register("alloy", MiscRecipe.ALLOY_RECIPE)
+                .register("material", MaterialRecipe.MATERIAL_BIND);
     }
 
     @Override
