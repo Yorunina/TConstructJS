@@ -1,4 +1,4 @@
-package com.xiaoyue.tconstruct_js.content;
+package com.xiaoyue.tconstruct_js.content.modifier;
 
 import dev.latvian.mods.kubejs.registry.RegistryInfo;
 import net.minecraft.core.Direction;

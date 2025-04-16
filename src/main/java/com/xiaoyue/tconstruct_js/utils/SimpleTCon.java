@@ -1,6 +1,6 @@
 package com.xiaoyue.tconstruct_js.utils;
 
-import com.xiaoyue.tconstruct_js.content.ModifierBuilder;
+import com.xiaoyue.tconstruct_js.content.modifier.ModifierBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;

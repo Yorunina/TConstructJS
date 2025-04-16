@@ -1,6 +1,6 @@
 package com.xiaoyue.tconstruct_js.event;
 
-import com.xiaoyue.tconstruct_js.content.ModifierBuilder;
+import com.xiaoyue.tconstruct_js.content.modifier.ModifierBuilder;
 import dev.latvian.mods.kubejs.KubeJS;
 import dev.latvian.mods.kubejs.event.StartupEventJS;
 import slimeknights.tconstruct.library.modifiers.Modifier;
