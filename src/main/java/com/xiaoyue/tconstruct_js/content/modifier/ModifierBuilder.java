@@ -21,6 +21,7 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.library.modifiers.Modifier;
+import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.hook.interaction.InteractionSource;
 import slimeknights.tconstruct.library.tools.context.*;
 import slimeknights.tconstruct.library.tools.nbt.*;

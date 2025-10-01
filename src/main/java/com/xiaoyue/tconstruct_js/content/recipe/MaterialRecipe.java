@@ -1,8 +1,10 @@
 package com.xiaoyue.tconstruct_js.content.recipe;
 
+import dev.latvian.mods.kubejs.fluid.InputFluid;
 import dev.latvian.mods.kubejs.item.InputItem;
 import dev.latvian.mods.kubejs.item.OutputItem;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
+import dev.latvian.mods.kubejs.recipe.component.FluidComponents;
 import dev.latvian.mods.kubejs.recipe.component.ItemComponents;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
 import dev.latvian.mods.kubejs.recipe.component.StringComponent;
@@ -16,4 +18,9 @@ public interface MaterialRecipe {
     RecipeKey<Integer> MATERIAL_NEED = NumberComponent.INT.key("needed").optional(1);
 
     RecipeSchema MATERIAL_BIND = new RecipeSchema(MATERIAL_ID, INPUT, MATERIAL_VALUE, MATERIAL_NEED, LEFTOVER);
+
+    RecipeKey<InputFluid> FLUID = FluidComponents.INPUT.key("fluid");
+    RecipeKey<Double> TEMPERATURE = NumberComponent.DOUBLE.key("temperature").optional(100d);
+    RecipeKey<String> OUTPUT_MATERIAL_ID = StringComponent.ID.key("output");
+    RecipeSchema MATERIAL_FLUID_BIND = new RecipeSchema(OUTPUT_MATERIAL_ID, FLUID, TEMPERATURE);
 }
